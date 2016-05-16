@@ -25,6 +25,8 @@ h1 {color: #FFF;}
           -moz-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
           box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);}
 
+.players h3 {color: #FFF;}          
+
 #player1 {float: left;}
 
 #player2 {float: right;}
@@ -35,7 +37,10 @@ h1 {color: #FFF;}
 		   padding: 8px 15px;
 		   font-weight: bold;
 		   margin-top: 10px;
--webkit-box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);
--moz-box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);
-box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);}		  
+           -webkit-box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);
+           -moz-box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);
+           box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);}	
+
+.playerResults {margin-top: 20px;
+				font-weight: bold}           	  
 
