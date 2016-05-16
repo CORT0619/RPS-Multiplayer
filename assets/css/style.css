@@ -9,11 +9,22 @@ body {background-color: #4F2461;
 		   background-color: #857373;
 		   -webkit-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
            -moz-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
-           box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);}
+           box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
+           height: 350px;}
+
+.gamePlay h1 {margin-top: 50px}           
+
+.gamePlay input[type=text] {margin-top: 20px;
+							 border-radius: 5px;
+							 height: 40px;
+							 padding-left: 10px;
+							 width: 300px;
+							 color: gray;
+							 font-size: 14pt;}           
 
 h1 {color: #FFF;}		   
 
-/*div#game {display: none;}*/
+div#game {display: none;}
 
 .players {width: 20%;
 		  border: 2px solid #9E9090;
