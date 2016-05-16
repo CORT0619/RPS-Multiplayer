@@ -40,17 +40,28 @@
 			<h1 class="text-center">Rock, Paper, Scissors</h1>
 			<p><label for="playerName">Name: </label>
 			<input type="text" id="playerName"></p>
-			<p><input type="submit" value="Begin!"></p>
+			<p><input type="submit" value="Begin!" id="btnBegin"></p>
 		</div>
 
-		<div id="game" class="gamePlay">
+		<div id="game">
 			<h1 class="text-center">Rock, Paper, Scissors</h1>
 
-			<h2>Hi {name}! You are player {}</h2>
-			<p id="whosTurn"></p>
+			<h4 class="text-center">Hi {name}! You are player {#}</h4>
+			<p id="whosTurn" class="text-center"></p>
 
-			<div id="player1"></div>
-			<div id="player2"></div>
+			<div id="player1" class="players text-center">
+				<p>{Player1}</p>
+				<p></p>
+				<p>Wins: {} Losses: {}</p>
+
+			</div>
+
+			<div id="player2" class="players text-center">
+				<p>{Player2}</p>
+				<p></p>
+				<p>Wins: {} Losses: {}</p>
+			</div>
+
 
 		</div>
 

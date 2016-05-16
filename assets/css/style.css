@@ -1,6 +1,41 @@
+body {background-color: #4F2461;
+	  color: #DECECE;}
+
 .gamePlay {width: 75%;
-		   border: 1px solid #000;
-		   margin: 100px auto;}
+		   border: 2px solid #9E9090;
+		   margin: 100px auto;
+		   border-radius: 5px;
+		   padding: 20px;
+		   background-color: #857373;
+		   -webkit-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
+           -moz-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
+           box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);}
+
+h1 {color: #FFF;}		   
 
 /*div#game {display: none;}*/
+
+.players {width: 20%;
+		  border: 2px solid #9E9090;
+		  border-radius: 3px;
+		  padding: 5px;
+		  background-color: #857373;
+		  color: #DECECE;
+		  -webkit-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
+          -moz-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
+          box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);}
+
+#player1 {float: left;}
+
+#player2 {float: right;}
+
+#btnBegin {border-radius: 4px;
+		   background-color: #77588C;
+		   border: 1px solid #49311c;
+		   padding: 8px 15px;
+		   font-weight: bold;
+		   margin-top: 10px;
+-webkit-box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);
+-moz-box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);
+box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);}		  
 
