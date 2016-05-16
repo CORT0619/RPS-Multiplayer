@@ -15,7 +15,6 @@ $(document).on('ready', function(){
 		if(playersExist){
 
 			if(snapshot.child("playerCount").val() == 2){
-			//if(playerCount > 2){ // needs to be changed
 
 				$('#playerDetails').css('display', 'none');
 
@@ -40,55 +39,106 @@ $(document).on('ready', function(){
 		if($('.gamePlay input[type=text]').val().trim() != ""){
 
 			playerName = $('.gamePlay input[type=text]').val().trim();
-			console.log("player name " + playerName);
 
 			connection.once("value", function(snapshot){
-			//connection.on("value", function(snapshot){	
 
 				currPlayerCount = snapshot.child("playerCount").val();
+				console.log("before " + currPlayerCount);
+				currPlayerCount++;
+				console.log("after " + currPlayerCount);
+				connection.update({playerCount: currPlayerCount});
 
-				console.log(currPlayerCount);
-				connection.update({playerCount: currPlayerCount+1});
-				console.log(snapshot.child("playerCount").val());
-
+/*
 				connection.push({
 
-					Player: currPlayerCount+1,
-					Name: playerName,
-					Choice: gameChoice,
-					Wins: wins,
-					Losses: losses
+						Player: currPlayerCount+1,
+						Name: playerName,
+						Choice: gameChoice,
+						Wins: wins,
+						Losses: losses
 
-				});
+				});*/
 
+
+
+				if(currPlayerCount == 1) {
+
+					connection.push({
+
+						Player1:{
+
+							Name: playerName,
+							Choice: gameChoice,
+							Wins: wins,
+							Losses: losses
+						}
+
+					});
+
+				} else {
+
+					connection.push({
+
+						Player2:{
+
+							Name: playerName,
+							Choice: gameChoice,
+							Wins: wins,
+							Losses: losses
+
+						}
+
+					});
+
+
+				}	
 				$('#intro').hide();
 				$('#game').show();
 
-				console.log(currPlayerCount);
 
 			});
 
 
 			connection.on("child_added", function(snapshot){
 
-				//$('#p' + currPlayerCount +'Name').html(snapshot.child("").val());
+				//console.log("This is " + '#p' + currPlayerCount +'Name');
+
+				//$('#p' + currPlayerCount +'Name').html(snapshot.child("Player"+currPlayerCount).child("Name").val());
+
+				console.log(connection);
+				
+/*
+				if(connection.child("player1").exists()){
+
+					$('#p1Name').html(connection.child("Player1").child("Name").val());
+
+				} else if(connection.child("player2").exists()){
+
+					$('#p2Name').html(connection.child("Player2").child("Name").val());
+
+				}*/
+
+
+
+
+
+
+
+				$('#currName').html(snapshot.child("Player"+currPlayerCount).child("Name").val());
+
+				$('#playNum').html(currPlayerCount);
+				console.log(currPlayerCount);
+				console.log(snapshot.val());
+
+
+
+
 
 			});
 
 		}
 
 	});
-
-	connection.on("child_added", function(snapshot){
-
-
-	}, function(errorObject){
-
-		console.log("The read failed: " + errorObject.code);
-
-
-	});
-
 
 
 
