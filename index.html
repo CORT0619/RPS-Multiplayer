@@ -38,9 +38,12 @@
 
 		<div id="intro" class="gamePlay text-center">
 			<h1 class="text-center">Rock, Paper, Scissors</h1>
-			<p><label for="playerName">Name: </label>
-			<input type="text" id="playerName"></p>
-			<p><input type="submit" value="Begin!" id="btnBegin"></p>
+
+			<div id="playerDetails">
+				<p><label for="playerName">Name: </label>
+				<input type="text" id="playerName"></p>
+				<p><input type="submit" value="Begin!" id="btnBegin"></p>
+			</div>
 		</div>
 
 		<div id="game">
@@ -50,7 +53,7 @@
 			<p id="whosTurn" class="text-center"></p>
 
 			<div id="player1" class="players text-center">
-				<h3>{Player1}</h3>
+				<h3 id="p1Name">{Player1}</h3>
 
 				<p>Rock</p>
 				<p>Paper</p>
@@ -61,7 +64,7 @@
 			</div>
 
 			<div id="player2" class="players text-center">
-				<h3>{Player2}</h3>
+				<h3 id="p2Name">{Player2}</h3>
 
 				<p id="rock">Rock</p>
 				<p id="paper">Paper</p>
