@@ -3,11 +3,19 @@
 <head>
 	<title>Rock Paper Scissors Multiplayer</title>
 
-<!-- JQUERY -->
-<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-
-<!-- Reset.css -->
+<!-- custom css sheets -->
 <link href="assets/css/reset.css" rel="stylesheet" type="text/css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<link href="assets/css/style.css" rel="stylesheet" type="text/css">
 
 <!-- jquery files -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -15,10 +23,6 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-
-<!-- Style.css -->
-<link href="assets/css/style.css" rel="stylesheet" type="text/css">
 
 
 <!-- Firebase -->
@@ -31,6 +35,25 @@
 <body>
 
 	<div class="container-fluid">
+
+		<div id="intro" class="gamePlay text-center">
+			<h1 class="text-center">Rock, Paper, Scissors</h1>
+			<p><label for="playerName">Name: </label>
+			<input type="text" id="playerName"></p>
+			<p><input type="submit" value="Begin!"></p>
+		</div>
+
+		<div id="game" class="gamePlay">
+			<h1 class="text-center">Rock, Paper, Scissors</h1>
+
+			<h2>Hi {name}! You are player {}</h2>
+			<p id="whosTurn"></p>
+
+			<div id="player1"></div>
+			<div id="player2"></div>
+
+		</div>
+
 	</div>
 
 </body>
