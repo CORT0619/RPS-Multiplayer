@@ -50,14 +50,19 @@
 			<h1 class="text-center">Rock, Paper, Scissors</h1>
 
 			<h4 class="text-center">Hi <span id="currName">{name}</span>! You are Player <span id="playNum">{#}</span></h4>
-			<p id="whosTurn" class="text-center"></p>
+			<!--<h3 id="whosTurn" class="text-center"></h3>-->
+			<h3 id="p1Status"></h3>
+			<h3 id="p2Status"></h3>
 
 			<div id="player1" class="players text-center">
 				<h3 id="p1Name">{Player1}</h3>
+				
 
-				<p>Rock</p>
-				<p>Paper</p>
-				<p>Scissors</p>
+				<ul class="gamePieces" id="p1Pieces">
+					<li id="rock">Rock</li>
+					<li id="paper">Paper</li>
+					<li id="scissors">Scissors</li>
+				</ul>
 
 				<p id="player1Results" class="playerResults">Wins: <span id="p1Wins">{0}</span> Losses: <span id="p1Loss">{0}</span></p>
 
@@ -65,12 +70,17 @@
 
 			<div id="player2" class="players text-center">
 				<h3 id="p2Name">{Player2}</h3>
+				<h3 id="p2Status"></h3>
 
-				<p id="rock">Rock</p>
-				<p id="paper">Paper</p>
-				<p id="scissors">Scissors</p>
+				<ul class="gamePieces" id="p2Pieces">
+					<li id="rock">Rock</li>
+					<li id="paper">Paper</li>
+					<li id="scissors">Scissors</li>
+				</ul>
 
-				<p id="player2Results" class="playerResults">Wins: <span id="p2Wins">{0}</span> Losses: <span id="p2Loss">{0}</span></p>
+				<p id="waiting">Waiting for player 2</p>
+
+				<p id="p2Results" class="playerResults">Wins: <span id="p2Wins">{0}</span> Losses: <span id="p2Loss">{0}</span></p>
 			</div>
 
 

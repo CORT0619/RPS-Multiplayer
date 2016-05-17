@@ -34,7 +34,8 @@ div#game {display: none;}
 		  color: #DECECE;
 		  -webkit-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
           -moz-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
-          box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);}
+          box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
+      	  min-height: 180px;}
 
 .players h3 {color: #FFF;}          
 
@@ -53,5 +54,13 @@ div#game {display: none;}
            box-shadow: 6px 6px 5px -3px rgba(0,0,0,0.64);}	
 
 .playerResults {margin-top: 20px;
-				font-weight: bold}           	  
+				font-weight: bold}
+
+ul li {cursor: pointer;}				
+
+ul li:hover {/*border: 1px solid #9E9090;*/
+			 background-color: #9E9090;
+			 font-weight: bold;}
+
+#waiting {margin-top: 5%;}			 				           	  
 
