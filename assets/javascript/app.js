@@ -7,6 +7,10 @@ $(document).on('ready', function(){
 	var losses = 0;
 	var connection = new Firebase("https://rps-multi.firebaseIO.com");
 
+	var p1id;
+	var p2id;
+	var key;
+
 
 	connection.once("value", function(snapshot){
 
@@ -48,22 +52,10 @@ $(document).on('ready', function(){
 				console.log("after " + currPlayerCount);
 				connection.update({playerCount: currPlayerCount});
 
-/*
-				connection.push({
-
-						Player: currPlayerCount+1,
-						Name: playerName,
-						Choice: gameChoice,
-						Wins: wins,
-						Losses: losses
-
-				});*/
-
-
 
 				if(currPlayerCount == 1) {
 
-					connection.push({
+					p1id = connection.push({
 
 						Player1:{
 
@@ -77,7 +69,7 @@ $(document).on('ready', function(){
 
 				} else {
 
-					connection.push({
+					p2id = connection.push({
 
 						Player2:{
 
@@ -99,37 +91,64 @@ $(document).on('ready', function(){
 			});
 
 
-			connection.on("child_added", function(snapshot){
+			connection.on("value", function(snapshot){
 
 				//console.log("This is " + '#p' + currPlayerCount +'Name');
 
 				//$('#p' + currPlayerCount +'Name').html(snapshot.child("Player"+currPlayerCount).child("Name").val());
 
-				console.log(connection);
-				
+				snapshot.forEach(function(stuff){
+
+					var key = stuff.key().toString();
+
+					console.log(stuff.val());
+
+					var concat = "Player" + currPlayerCount;
+					console.log(concat);
+
+					console.log(stuff.child(concat).child("Name").val());
+
+
+					if(currPlayerCount == 1){
+
+						$('#currName').html(stuff.child("Player1").child("Name").val());
+
+
+					} else {
+
+						$('#currName').html(stuff.child("Player2").child("Name").val());
+
+					}
+
+
+					if(stuff.hasChild("Player1")){
+
+						$('#p1Name').html(stuff.child("Player1").child("Name").val());
+					}
+
+					if(stuff.hasChild("Player2")){
+
+						$('#p2Name').html(stuff.child("Player2").child("Name").val());
+					}
+
+
+					$('#playNum').html(currPlayerCount);
+
+
+				});
+
 /*
-				if(connection.child("player1").exists()){
+				if(/snapshot.hasChild("Player1")){
 
-					$('#p1Name').html(connection.child("Player1").child("Name").val());
+					$('#p1Name').html(snapshot.child("Player1").child("Name").val());
 
-				} else if(connection.child("player2").exists()){
+				}
 
-					$('#p2Name').html(connection.child("Player2").child("Name").val());
+				if(snapshot.child("Player2").exists()){
+
+					$('#p2Name').html(snapshot.child("Player2").child("Name").val());
 
 				}*/
-
-
-
-
-
-
-
-				$('#currName').html(snapshot.child("Player"+currPlayerCount).child("Name").val());
-
-				$('#playNum').html(currPlayerCount);
-				console.log(currPlayerCount);
-				console.log(snapshot.val());
-
 
 
 
