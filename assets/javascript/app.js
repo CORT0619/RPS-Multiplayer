@@ -102,15 +102,20 @@ $(document).on('ready', function(){
 					if(stuff.hasChild("Player1")){
 
 						$('#p1Name').html(stuff.child("Player1").child("Name").val());
+						$('#p1Wins').html(stuff.child("Player1").child("Wins").val());
+						$('#p1Loss').html(stuff.child("Player1").child("Losses").val());
 					}
 
 					if(stuff.hasChild("Player2")){
 
 						$('#p2Name').html(stuff.child("Player2").child("Name").val());
+						$('#p2Wins').html(stuff.child("Player2").child("Wins").val());
+						$('#p2Loss').html(stuff.child("Player2").child("Losses").val());						
 					}
 
 
 					$('#playNum').html(currPlayerCount);
+
 
 
 				});
