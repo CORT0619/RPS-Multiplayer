@@ -7,11 +7,6 @@ $(document).on('ready', function(){
 	var losses = 0;
 	var connection = new Firebase("https://rps-multi.firebaseIO.com");
 
-	var p1id;
-	var p2id;
-	var key;
-
-
 	connection.once("value", function(snapshot){
 
 		var playersExist = snapshot.child("playerCount").exists();
@@ -47,9 +42,7 @@ $(document).on('ready', function(){
 			connection.once("value", function(snapshot){
 
 				currPlayerCount = snapshot.child("playerCount").val();
-				console.log("before " + currPlayerCount);
 				currPlayerCount++;
-				console.log("after " + currPlayerCount);
 				connection.update({playerCount: currPlayerCount});
 
 
@@ -66,6 +59,8 @@ $(document).on('ready', function(){
 						}
 
 					});
+
+
 
 				} else {
 
@@ -99,26 +94,9 @@ $(document).on('ready', function(){
 
 				snapshot.forEach(function(stuff){
 
-					var key = stuff.key().toString();
-
 					console.log(stuff.val());
 
-					var concat = "Player" + currPlayerCount;
-					console.log(concat);
-
-					console.log(stuff.child(concat).child("Name").val());
-
-
-					if(currPlayerCount == 1){
-
-						$('#currName').html(stuff.child("Player1").child("Name").val());
-
-
-					} else {
-
-						$('#currName').html(stuff.child("Player2").child("Name").val());
-
-					}
+					$('#currName').html(playerName);
 
 
 					if(stuff.hasChild("Player1")){
