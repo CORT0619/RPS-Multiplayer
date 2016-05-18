@@ -211,7 +211,9 @@ $(document).on('ready', function(){
 
 			console.log($(this).attr('id'));
 			p2Choice =$(this).attr('id');
+			getWinner(p1Choice, p2Choice);
 			connection.update({turn: 0});
+
 		});
 
 
@@ -289,3 +291,23 @@ $(document).on('ready', function(){
 
 
 }); // end of document.ready
+
+function getWinner(playerOne, playerTwo){
+
+	if(playerOne == 'rock' && playerTwo == 'scissors' ||
+	   playerOne == 'scissors' && playerTwo == 'paper' ||
+	   playerOne == 'paper' && playerTwo == 'rock'){
+
+		connection.update({}); //update playerOne wins
+	    connection.update({}); //update playerTwo losses
+
+	} else if(playerTwo == 'rock' && playerOne == 'scissors' ||
+	  		  playerTwo == 'scissors' && playerOne == 'paper' ||
+	 		  playerTwo == 'paper' && playerOne == 'rock'){
+
+		connection.update({}); //update playerTwo wins
+	    connection.update({}); //update playerOne losses
+
+	}
+
+}
