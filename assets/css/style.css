@@ -35,7 +35,7 @@ div#game {display: none;}
 		  -webkit-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
           -moz-box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
           box-shadow: 8px 5px 5px 0px rgba(0,0,0,0.45);
-      	  min-height: 180px;}
+      	  min-height: 215px;}
 
 .players h3 {color: #FFF;}          
 
@@ -58,9 +58,8 @@ div#game {display: none;}
 
 ul li {cursor: pointer;}				
 
-ul li:hover {/*border: 1px solid #9E9090;*/
-			 background-color: #9E9090;
+ul li:hover {background-color: #9E9090;
 			 font-weight: bold;}
 
-#waiting {margin-top: 5%;}			 				           	  
+.waiting {margin-top: 5%;}			 				           	  
 

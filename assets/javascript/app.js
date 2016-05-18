@@ -6,11 +6,16 @@ $(document).on('ready', function(){
 	var wins = 0;
 	var losses = 0;
 	var parent;
+	var player;
+	var p1Choice;
+	var p2Choice;
 	var connection = new Firebase("https://rps-multi.firebaseIO.com");
 
 	connection.once("value", function(snapshot){
 
 		var playersExist = snapshot.child("playerCount").exists();
+
+		console.log("player exists: " + playersExist);
 
 		if(playersExist){
 
@@ -26,10 +31,12 @@ $(document).on('ready', function(){
 
 		} else {
 
-			connection.set({
-				playerCount: 0,
-				turn: 0
-			});
+			console.log("setting stuff before");
+
+			connection.child('playerCount').set(0);
+			connection.child('turn').set(0);
+
+			console.log("setting stuff after");
 
 		}
 	});
@@ -45,6 +52,7 @@ $(document).on('ready', function(){
 
 				currPlayerCount = snapshot.child("playerCount").val();
 				currPlayerCount++;
+
 				connection.update({playerCount: currPlayerCount});
 
 
@@ -86,9 +94,10 @@ $(document).on('ready', function(){
 
 		connection.on("child_added", function(snapshot){
 
-			console.log(snapshot.val());
-			$('#playNum').html(currPlayerCount);
+			console.log("child added " +snapshot.val());
+			$('#playNum').html(currPlayerCount).attr('data-player', currPlayerCount);
 			$('#currName').html(playerName);
+			player = $('#playNum').attr('data-player');
 
 
 			if(snapshot.key() == "1"){
@@ -96,11 +105,10 @@ $(document).on('ready', function(){
 				$('#p1Name').html(snapshot.val().Name);
 				$('#p1Wins').html(snapshot.val().Wins);
 				$('#p1Loss').html(snapshot.val().Losses);
-				$('#p2Name').hide();
-				//$('#p2Pieces').hide();
-				$('#p2Results').hide();
-				//$('.gamePieces').hide();
+				$('#p2Name').css('visibility', 'hidden');
+				$('#p2Results').css('visibility', 'hidden');
 				$('.gamePieces').css('visibility', 'hidden');
+				$('#p1Waiting').css('visibility', 'hidden');
 			}
 
 			if(snapshot.key() == "2"){
@@ -108,35 +116,81 @@ $(document).on('ready', function(){
 				$('#p2Name').html(snapshot.val().Name);
 				$('#p2Wins').html(snapshot.val().Wins);
 				$('#p2Loss').html(snapshot.val().Losses);
-				$('#p2Name').show();
-				$('.gamePieces').css('visibility', 'visible');
+				$('#p2Name').css('visibility', 'visible');
+
+				if(player == 1){
+
+					$('#whosTurn').html("It's Your Turn!");
+					//$('#p1Name').html(snapshot.val().Name);
+					$('#p1Wins').html(snapshot.val().Wins);
+					$('#p1Loss').html(snapshot.val().Losses);
+					//$('#p2Name').hide();
+					$('#p1Pieces').css('visibility', 'visible');
+					$('#p2Waiting').css('visibility', 'hidden');
+					$('#p2Results').css('visibility', 'visible');
+
+
+				} else if(player == 2){
+
+					$('#whosTurn').html("Waiting for Player 1 to choose.");
+					$('#p2Waiting').css('visibility', 'hidden');
+					$('#p2Results').css('visibility', 'visible');
+				}
+
+				/*$('.gamePieces').css('visibility', 'visible');
 				$('#p2Pieces').css('visibility', 'hidden');
 				$('#waiting').hide();
-				$('#p2Results').show();
+				$('#p2Results').show();*/
 
-				connection.update({turn: 1});
+				//connection.update({turn: 1});
 			}
 
 
 		});
 
-		connection.on("value", function(snapshot){
-			//console.log("turn: " + snapshot.val().turn);
+		connection.once("value", function(snapshot){
 
-			console.log(snapshot.val());
+			console.log("something changed " + snapshot.val());
 
-			if(snapshot.exists() && snapshot.val().turn == 1){
+			player = $('#playNum').attr('data-player');
 
-				console.log("I'm here");
-				$('#p1Status').html("It's Your Turn!");
-				$('#p2Status').html("Waiting for to choose.");
+			/*console.log("Player " + player);
 
-				connection.update({turn: 2});
+
+			console.log(snapshot.exists());
+			if(snapshot.exists()){
+				console.log(snapshot.val().turn);
+			}*/	
+			
+			if(snapshot.exists() && snapshot.val().turn == 0){
+
+				if(player == 1){
+
+					$('#whosTurn').html("It's Your Turn!");
+					$('#p1Name').html(snapshot.val().Name);
+					$('#p1Wins').html(snapshot.val().Wins);
+					$('#p1Loss').html(snapshot.val().Losses);
+					$('#p2Name').hide();
+					$('#p2Results').hide();
+					$('.gamePieces').css('visibility', 'hidden');
+
+				} else if(player == 2){
+
+					$('#whosTurn').html("Waiting for Player " + player + "to choose.");
+				} 
 
 			} else if(snapshot.exists() && snapshot.val().turn == 2){
 
+				if(player == 1){
 
-			}
+					$('#whosTurn').html("Waiting for Player " + player + "to choose.");
+
+				} else if(player == 2){
+
+					$('#whosTurn').html("It's Your Turn!");
+				}
+
+			}	
 
 
 
@@ -144,7 +198,7 @@ $(document).on('ready', function(){
 
 		$('.gamePieces li').on('click', function(){
 
-			console.log("blah");
+			console.log($(this).attr('id'));
 		});
 /*
 			connection.on("value", function(snapshot){
