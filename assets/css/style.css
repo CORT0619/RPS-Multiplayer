@@ -61,5 +61,7 @@ ul li {cursor: pointer;}
 ul li:hover {background-color: #9E9090;
 			 font-weight: bold;}
 
-.waiting {margin-top: 5%;}			 				           	  
+.waiting {margin-top: 5%;}	
+
+#reset {color: #000;}		 				           	  
 
