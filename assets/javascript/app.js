@@ -121,10 +121,8 @@ $(document).on('ready', function(){
 				if(player == 1){
 
 					$('#whosTurn').html("It's Your Turn!");
-					//$('#p1Name').html(snapshot.val().Name);
 					$('#p1Wins').html(snapshot.val().Wins);
 					$('#p1Loss').html(snapshot.val().Losses);
-					//$('#p2Name').hide();
 					$('#p1Pieces').css('visibility', 'visible');
 					$('#p2Waiting').css('visibility', 'hidden');
 					$('#p2Results').css('visibility', 'visible');
@@ -193,13 +191,30 @@ $(document).on('ready', function(){
 			}	
 
 
-
 		});
-
+/*
 		$('.gamePieces li').on('click', function(){
 
 			console.log($(this).attr('id'));
+		});*/
+
+		$('#p1Pieces li').on('click', function(){
+
+			console.log($(this).attr('id'));
+			p1Choice =$(this).attr('id');
+			connection.update({turn: 2});
+
 		});
+
+
+		$('#p2Pieces li').on('click', function(){
+
+			console.log($(this).attr('id'));
+			p2Choice =$(this).attr('id');
+			connection.update({turn: 0});
+		});
+
+
 /*
 			connection.on("value", function(snapshot){
 
