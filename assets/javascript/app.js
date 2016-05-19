@@ -190,7 +190,6 @@
 			connection.update({turn: 2});
 			console.log("p1Choice " + p1Choice);
 
-			//return p1Choice;
 		});
 
 
