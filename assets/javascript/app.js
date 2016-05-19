@@ -219,6 +219,7 @@ $(document).on('ready', function(){
 		$('#reset').on('click', function(){
 			connection.remove();
 			window.location.href = "http://whispering-thicket-72416.herokuapp.com/";
+			console.log("blah");
 
 		});
 
