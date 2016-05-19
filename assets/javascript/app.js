@@ -1,23 +1,21 @@
-//$(document).on('ready', function(){
 
 	var playerName;
 	var currPlayerCount;
-	var gameChoice = "";
+	//var gameChoice = "";
 	var p1Wins = 0;
 	var p1Losses = 0;
 	var p2Wins = 0;
 	var p2Losses = 0;
-	var parent;
 	var player;
 	var p1Choice;
 	var p2Choice;
+
 	var connection = new Firebase("https://rps-multi.firebaseIO.com");
 
 	connection.once("value", function(snapshot){
 
 		var playersExist = snapshot.child("playerCount").exists();
 
-		console.log("player exists: " + playersExist);
 
 		if(playersExist){
 
@@ -57,13 +55,12 @@
 
 				if(currPlayerCount == 1) {
 
-					//connection.push({
 					connection.update({
 
 						1:{
 
 							Name: playerName,
-							Choice: gameChoice,
+							//Choice: gameChoice,
 							Wins: p1Wins,
 							Losses: p1Losses
 						}
@@ -71,13 +68,12 @@
 
 				} else {
 
-					//connection.push({
 					connection.update({
 
 						2:{
 
 							Name: playerName,
-							Choice: gameChoice,
+							//Choice: gameChoice,
 							Wins: p2Wins,
 							Losses: p2Losses
 						}
@@ -108,6 +104,9 @@
 				$('#p2Results').css('visibility', 'hidden');
 				$('.gamePieces').css('visibility', 'hidden');
 				$('#p1Waiting').css('visibility', 'hidden');
+				$('#p1Pick').hide();
+				$('#p2Pick').hide();
+
 			}
 
 			if(snapshot.key() == "2"){
@@ -119,9 +118,24 @@
 
 				connection.update({turn: 1});
 
+			}
 
+		});
 
-				/*if(player == 1){
+		connection.on("value", function(snapshot){
+
+			console.log("turn changed");
+			$('#p1Pick').hide();
+			$('#p2Pick').hide();
+
+			$('#p1Wins').html(snapshot.child("1").val().Wins);
+			$('#p1Loss').html(snapshot.child("1").val().Losses);
+			$('#p2Wins').html(snapshot.child("2").val().Wins);
+			$('#p2Loss').html(snapshot.child("2").val().Losses);
+	
+			if(snapshot.exists() && snapshot.val().turn == 1){
+
+				if(player == 1){
 
 					$('#whosTurn').html("It's Your Turn!");
 					$('#p1Wins').html(snapshot.val().Wins);
@@ -130,129 +144,77 @@
 					$('#p2Waiting').css('visibility', 'hidden');
 					$('#p2Results').css('visibility', 'visible');
 
-
 				} else if(player == 2){
 
 					$('#whosTurn').html("Waiting for Player 1 to choose.");
 					$('#p2Waiting').css('visibility', 'hidden');
 					$('#p2Results').css('visibility', 'visible');
-				}*/
-
-
-
-				/*$('.gamePieces').css('visibility', 'visible');
-				$('#p2Pieces').css('visibility', 'hidden');
-				$('#waiting').hide();
-				$('#p2Results').show();*/
-
-				//connection.update({turn: 1});
-			}
-
-
-		});
-
-
-				connection.on("value", function(snapshot){
-
-					console.log("turn changed");
-			
-					if(snapshot.exists() && snapshot.val().turn == 1){
-
-						if(player == 1){
-
-							$('#whosTurn').html("It's Your Turn!");
-							$('#p1Wins').html(snapshot.val().Wins);
-							$('#p1Loss').html(snapshot.val().Losses);
-							$('#p1Pieces').css('visibility', 'visible');
-							$('#p2Waiting').css('visibility', 'hidden');
-							$('#p2Results').css('visibility', 'visible');
-
-
-
-						} else if(player == 2){
-
-							$('#whosTurn').html("Waiting for Player 1 to choose.");
-							$('#p2Waiting').css('visibility', 'hidden');
-							$('#p2Results').css('visibility', 'visible');
-							$('#p1Pieces').css('visibility', 'hidden');	
-							$('#p2Pieces').css('visibility', 'hidden');							
-						} 
-
-					} else if(snapshot.exists() && snapshot.val().turn == 2){
-
-						if(player == 1){
-
-							$('#whosTurn').html("Waiting for Player 2 to choose.");
-							$('#p1Pieces').css('visibility', 'hidden');
-
-						} else if(player == 2){
-
-							$('#whosTurn').html("It's Your Turn!");
-							$('#p2Pieces').css('visibility', 'visible');
-
-						}
-
-					}
-
-
-				});
-/* // may need to uncomment
-		connection.on("value", function(snapshot){
-
-			console.log("something changed " + snapshot.val());
-
-			player = $('#playNum').attr('data-player');
-			
-			if(snapshot.exists() && snapshot.val().turn == 0){
-
-				if(player == 1){
-
-					$('#whosTurn').html("It's Your Turn!");
-					$('#p1Name').html(snapshot.val().Name);
-					$('#p1Wins').html(snapshot.val().Wins);
-					$('#p1Loss').html(snapshot.val().Losses);
-					$('#p2Name').css('visibility', 'visible');
-					$('#p2Results').css('visibility', 'visible');
-					//$('.gamePieces').css('visibility', 'hidden');
-
-
-				} else if(player == 2){
-
-					$('#whosTurn').html("Waiting for Player " + player + "to choose.");
+					$('#p1Pieces').css('visibility', 'hidden');	
+					$('#p2Pieces').css('visibility', 'hidden');							
 				} 
 
 			} else if(snapshot.exists() && snapshot.val().turn == 2){
 
 				if(player == 1){
 
-					$('#whosTurn').html("Waiting for Player " + player + "to choose.");
+					$('#whosTurn').html("Waiting for Player 2 to choose.");
+					$('#p1Pieces').css('visibility', 'hidden');
+					$('#p1Pick').show();
+
 
 				} else if(player == 2){
 
 					$('#whosTurn').html("It's Your Turn!");
+					$('#p2Pieces').css('visibility', 'visible');
+
 				}
 
-			}	
+			}
 
+		});
 
-		});*/
 
 		$('#p1Pieces li').on('click', function(){
 
 			p1Choice = $(this).attr('id');
+			$('#p1Pick').show().html(p1Choice);
+
+			//connection.update({1: {Choice: p1Choice}});
+			connection.child("1").set({Choice: p1Choice});
+
+			if(player == 1){
+
+				$('#p1Pick').html(p1Choice);
+			}
+
 			connection.update({turn: 2});
 			console.log("p1Choice " + p1Choice);
 
-			return p1Choice;
+			//return p1Choice;
 		});
 
 
 		$('#p2Pieces li').on('click', function(){
 
-			console.log("p1Choice " + p1Choice);
+			p2Choice = $(this).attr('id');
+			//$('#p2Pick').attr('data-pick', p2Choice);
+			$('#p2Pick').show().html(p2Choice);
 
-			p2Choice =$(this).attr('id');
-			getWinner(p1Choice, p2Choice);
+			connection.child("2").set({Choice: p2Choice});
+
+			if(player == 2){
+
+				$('#p2Pick').show().html(p2Choice);
+				$('#p2Pieces').css('visibility', 'visible');
+			}
+
+			var one = $('#p1Pick').attr('data-pick');
+			var two = $('#p2Pick').attr('data-pick');
+
+			console.log("first pick is " +one);
+
+
+			getWinner(/*one, two*/);
 			connection.update({turn: 1});
 
 		});
@@ -264,85 +226,19 @@
 		});
 
 
-/*
-			connection.on("value", function(snapshot){
-
-				//console.log("This is " + '#p' + currPlayerCount +'Name');
-
-				//$('#p' + currPlayerCount +'Name').html(snapshot.child("Player"+currPlayerCount).child("Name").val());
-
-				snapshot.forEach(function(object){
-
-					console.log("snapshot " + snapshot.child("1").val());
-					console.log("Object " + object.val());
-
-					parent = object.key();
-
-					$('#currName').html(playerName);
-
-
-						//if(stuff.hasChild("Player1")){
-					//if(stuff.val() == 1){
-					//if(parent == 1){
-					if(snapshot.child("1").exists()){	
-
-						//$('#p1Name').html(stuff.child("1").child("Name").val());
-						$('#p1Name').html(object.val().Name);
-						//$('#p1Wins').html(stuff.child("1").child("Wins").val());
-						$('#p1Wins').html(object.val().Wins);
-						//$('#p1Loss').html(stuff.child("1").child("Losses").val());
-						$('#p1Loss').html(object.val().Losses);
-					}
-
-					//if(stuff.hasChild("Player2")){
-					if(snapshot.child("2").exists()){	
-						//$('#p2Name').html(stuff.child("Player2").child("Name").val());
-						$('#p2Name').html(object.val().Name);
-						//$('#p2Wins').html(stuff.child("Player2").child("Wins").val());
-						$('#p2Wins').html(object.val().Wins);
-						//$('#p2Loss').html(stuff.child("Player2").child("Losses").val());	
-						$('#p2Loss').html(object.val().Losses);					
-					}
-
-					$('#playNum').html(currPlayerCount);
-
-				});
-
-
-				//if(snapshot.hasChild("Player1")){
-
-				//	$('#p1Name').html(snapshot.child("Player1").child("Name").val());
-
-				//}
-
-			//	if(snapshot.child("Player2").exists()){
-
-				//	$('#p2Name').html(snapshot.child("Player2").child("Name").val());
-
-				//}
-
-			});
-
-			console.log('#p' + currPlayerCount + "Pieces li");
-
-				$('#p' + currPlayerCount + "Pieces li").on('click', function(){
-
-					console.log("blah");
-
-					gameChoice = $(this).attr('id');
-					console.log(gameChoice);
-					//connection.update();
-				});*/
-
-
-
-
-//}); // end of document.ready
-
 function getWinner(playerOne, playerTwo){
 
 	console.log("playerOne " + playerOne);
 	console.log("playerTwo " + playerTwo);
+
+	connection.on("value", function(snapshot){
+
+		console.log(snapshot.val());
+		playerOne = snapshot.child("1").val().Choice;
+		console.log("Player 1 getwinner function " + playerOne);
+		playerTwo = snapshot.child("2").val().Choice;
+		console.log("Player 2 getwinner function " + playerTwo);
+	})
 
 	if(playerOne == 'rock' && playerTwo == 'scissors' ||
 	   playerOne == 'scissors' && playerTwo == 'paper' ||
@@ -351,23 +247,39 @@ function getWinner(playerOne, playerTwo){
 		
 		p1Wins++;
 		p2Losses++;
+			
+
+		$('#p1Pick').show().html($('#p1Pick').attr('data-pick'));
+		$('#p2Pick').show().html($('#p2Pick').attr('data-pick'));
+		$('#winner').show().text("Player 1 Wins!");
 
 		//connection.child('1').set({Wins: p1Wins});
-		connection.update({1: {Wins:  p1Wins}}); //update playerOne wins
-	    connection.update({2: {Losses: p2Losses}}); //update playerTwo losses
-
-	    console.log('here');
+		connection.update({1: {Wins:  p1Wins}, 2: {Losses: p2Losses}}); //update playerOne wins
 
 	} else if(playerTwo == 'rock' && playerOne == 'scissors' ||
 	  		  playerTwo == 'scissors' && playerOne == 'paper' ||
 	 		  playerTwo == 'paper' && playerOne == 'rock'){
 
 		p2Wins++;
+		
 		p1Losses++;
+		
 
-		connection.update({2: {Wins: p2Wins}}); //update playerTwo wins
-	    connection.update({1: {Losses: p1Losses}}); //update playerOne losses
+		$('#p1Pick').show();
+		$('#p2Pick').show();
+		$('#winner').show().text("Player 2 Wins!");
+
+		
+		connection.update({1: {Losses: p1Losses}, 2: {Wins: p2Wins}}); //update playerOne losses
 
 	}
+		console.log("p1Wins" + p1Wins);
+		console.log("p2wins " + p2Wins);
+		console.log("p2Losses " + p2Losses);
+		console.log("p1Losses " + p1Losses);
 
+		
+	    //connection.update({2: {Losses: p2Losses}}); //update playerTwo losses
+
+		//connection.update({2: {Wins: p2Wins}}); //update playerTwo wins
 }

@@ -41,6 +41,9 @@ div#game {display: none;}
 
 #player1 {float: left;}
 
+#gameResults {float: left;
+			  margin-left: 20%;}
+
 #player2 {float: right;}
 
 #btnBegin {border-radius: 4px;
@@ -63,5 +66,7 @@ ul li:hover {background-color: #9E9090;
 
 .waiting {margin-top: 5%;}	
 
-#reset {color: #000;}		 				           	  
+#reset {color: #000;}	
+
+#clearfix {clear: both;}	 				           	  
 
