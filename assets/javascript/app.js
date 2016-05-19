@@ -1,4 +1,4 @@
-$(document).on('ready', function(){
+//$(document).on('ready', function(){
 
 	var playerName;
 	var currPlayerCount;
@@ -35,6 +35,8 @@ $(document).on('ready', function(){
 			connection.child('turn').set(0);
 		}
 	});
+
+	connection.off("value", function(snapshot){});
 
 	
 	$('#btnBegin').on('click', function(){
@@ -113,7 +115,11 @@ $(document).on('ready', function(){
 				$('#p2Loss').html(snapshot.val().Losses);
 				$('#p2Name').css('visibility', 'visible');
 
-				if(player == 1){
+				connection.update({turn: 1});
+
+
+
+				/*if(player == 1){
 
 					$('#whosTurn').html("It's Your Turn!");
 					$('#p1Wins').html(snapshot.val().Wins);
@@ -128,26 +134,46 @@ $(document).on('ready', function(){
 					$('#whosTurn').html("Waiting for Player 1 to choose.");
 					$('#p2Waiting').css('visibility', 'hidden');
 					$('#p2Results').css('visibility', 'visible');
-				}
+				}*/
+
+
+
+				/*$('.gamePieces').css('visibility', 'visible');
+				$('#p2Pieces').css('visibility', 'hidden');
+				$('#waiting').hide();
+				$('#p2Results').show();*/
+
+				//connection.update({turn: 1});
+			}
+
+
+		});
+
 
 				connection.on("value", function(snapshot){
+
+					console.log("turn changed");
 			
-					if(snapshot.exists() && snapshot.val().turn == 0){
+					if(snapshot.exists() && snapshot.val().turn == 1){
 
 						if(player == 1){
 
 							$('#whosTurn').html("It's Your Turn!");
-							$('#p1Name').html(snapshot.val().Name);
 							$('#p1Wins').html(snapshot.val().Wins);
 							$('#p1Loss').html(snapshot.val().Losses);
-							$('#p2Name').css('visibility', 'visible');
+							$('#p1Pieces').css('visibility', 'visible');
+							$('#p2Waiting').css('visibility', 'hidden');
 							$('#p2Results').css('visibility', 'visible');
-							//$('.gamePieces').css('visibility', 'hidden');
+
 
 
 						} else if(player == 2){
 
 							$('#whosTurn').html("Waiting for Player 1 to choose.");
+							$('#p2Waiting').css('visibility', 'hidden');
+							$('#p2Results').css('visibility', 'visible');
+							$('#p1Pieces').css('visibility', 'hidden');	
+							$('#p2Pieces').css('visibility', 'hidden');							
 						} 
 
 					} else if(snapshot.exists() && snapshot.val().turn == 2){
@@ -160,7 +186,6 @@ $(document).on('ready', function(){
 						} else if(player == 2){
 
 							$('#whosTurn').html("It's Your Turn!");
-
 							$('#p2Pieces').css('visibility', 'visible');
 
 						}
@@ -169,17 +194,6 @@ $(document).on('ready', function(){
 
 
 				});
-
-				/*$('.gamePieces').css('visibility', 'visible');
-				$('#p2Pieces').css('visibility', 'hidden');
-				$('#waiting').hide();
-				$('#p2Results').show();*/
-
-				//connection.update({turn: 1});
-			}
-
-
-		});
 /* // may need to uncomment
 		connection.on("value", function(snapshot){
 
@@ -223,17 +237,21 @@ $(document).on('ready', function(){
 
 		$('#p1Pieces li').on('click', function(){
 
-			p1Choice =$(this).attr('id');
+			p1Choice = $(this).attr('id');
 			connection.update({turn: 2});
+			console.log("p1Choice " + p1Choice);
 
+			return p1Choice;
 		});
 
 
 		$('#p2Pieces li').on('click', function(){
 
+			console.log("p1Choice " + p1Choice);
+
 			p2Choice =$(this).attr('id');
 			getWinner(p1Choice, p2Choice);
-			connection.update({turn: 0});
+			connection.update({turn: 1});
 
 		});
 
@@ -317,7 +335,7 @@ $(document).on('ready', function(){
 
 
 
-}); // end of document.ready
+//}); // end of document.ready
 
 function getWinner(playerOne, playerTwo){
 
