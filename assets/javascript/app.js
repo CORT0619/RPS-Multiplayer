@@ -31,13 +31,8 @@ $(document).on('ready', function(){
 
 		} else {
 
-			console.log("setting stuff before");
-
 			connection.child('playerCount').set(0);
 			connection.child('turn').set(0);
-
-			console.log("setting stuff after");
-
 		}
 	});
 
@@ -135,6 +130,46 @@ $(document).on('ready', function(){
 					$('#p2Results').css('visibility', 'visible');
 				}
 
+				connection.on("value", function(snapshot){
+			
+					if(snapshot.exists() && snapshot.val().turn == 0){
+
+						if(player == 1){
+
+							$('#whosTurn').html("It's Your Turn!");
+							$('#p1Name').html(snapshot.val().Name);
+							$('#p1Wins').html(snapshot.val().Wins);
+							$('#p1Loss').html(snapshot.val().Losses);
+							$('#p2Name').css('visibility', 'visible');
+							$('#p2Results').css('visibility', 'visible');
+							//$('.gamePieces').css('visibility', 'hidden');
+
+
+						} else if(player == 2){
+
+							$('#whosTurn').html("Waiting for Player 1 to choose.");
+						} 
+
+					} else if(snapshot.exists() && snapshot.val().turn == 2){
+
+						if(player == 1){
+
+							$('#whosTurn').html("Waiting for Player 2 to choose.");
+							$('#p1Pieces').css('visibility', 'hidden');
+
+						} else if(player == 2){
+
+							$('#whosTurn').html("It's Your Turn!");
+
+							$('#p2Pieces').css('visibility', 'visible');
+
+						}
+
+					}
+
+
+				});
+
 				/*$('.gamePieces').css('visibility', 'visible');
 				$('#p2Pieces').css('visibility', 'hidden');
 				$('#waiting').hide();
@@ -145,20 +180,12 @@ $(document).on('ready', function(){
 
 
 		});
-
-		connection.once("value", function(snapshot){
+/* // may need to uncomment
+		connection.on("value", function(snapshot){
 
 			console.log("something changed " + snapshot.val());
 
 			player = $('#playNum').attr('data-player');
-
-			/*console.log("Player " + player);
-
-
-			console.log(snapshot.exists());
-			if(snapshot.exists()){
-				console.log(snapshot.val().turn);
-			}*/	
 			
 			if(snapshot.exists() && snapshot.val().turn == 0){
 
@@ -168,9 +195,10 @@ $(document).on('ready', function(){
 					$('#p1Name').html(snapshot.val().Name);
 					$('#p1Wins').html(snapshot.val().Wins);
 					$('#p1Loss').html(snapshot.val().Losses);
-					$('#p2Name').hide();
-					$('#p2Results').hide();
-					$('.gamePieces').css('visibility', 'hidden');
+					$('#p2Name').css('visibility', 'visible');
+					$('#p2Results').css('visibility', 'visible');
+					//$('.gamePieces').css('visibility', 'hidden');
+
 
 				} else if(player == 2){
 
@@ -191,16 +219,10 @@ $(document).on('ready', function(){
 			}	
 
 
-		});
-/*
-		$('.gamePieces li').on('click', function(){
-
-			console.log($(this).attr('id'));
 		});*/
 
 		$('#p1Pieces li').on('click', function(){
 
-			console.log($(this).attr('id'));
 			p1Choice =$(this).attr('id');
 			connection.update({turn: 2});
 
@@ -209,7 +231,6 @@ $(document).on('ready', function(){
 
 		$('#p2Pieces li').on('click', function(){
 
-			console.log($(this).attr('id'));
 			p2Choice =$(this).attr('id');
 			getWinner(p1Choice, p2Choice);
 			connection.update({turn: 0});
@@ -219,7 +240,6 @@ $(document).on('ready', function(){
 		$('#reset').on('click', function(){
 			connection.remove();
 			window.location.href = "http://whispering-thicket-72416.herokuapp.com/";
-			console.log("blah");
 
 		});
 
@@ -301,19 +321,26 @@ $(document).on('ready', function(){
 
 function getWinner(playerOne, playerTwo){
 
+	console.log("here");
+	console.log("playerOne " + playerOne);
+	console.log("playerTwo " + playerTwo);
+
 	if(playerOne == 'rock' && playerTwo == 'scissors' ||
 	   playerOne == 'scissors' && playerTwo == 'paper' ||
 	   playerOne == 'paper' && playerTwo == 'rock'){
 
-		connection.update({}); //update playerOne wins
-	    connection.update({}); //update playerTwo losses
+		//connection.update({1: {Wins: 1}}); //update playerOne wins
+		connection.child('1').set({Wins: 1});
+	    connection.update({2: {Losses: 1}}); //update playerTwo losses
+
+	    console.log('here');
 
 	} else if(playerTwo == 'rock' && playerOne == 'scissors' ||
 	  		  playerTwo == 'scissors' && playerOne == 'paper' ||
 	 		  playerTwo == 'paper' && playerOne == 'rock'){
 
-		connection.update({}); //update playerTwo wins
-	    connection.update({}); //update playerOne losses
+		connection.update({2: {Wins: 1}}); //update playerTwo wins
+	    connection.update({1: {Losses: 1}}); //update playerOne losses
 
 	}
 
