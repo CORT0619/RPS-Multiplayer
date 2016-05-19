@@ -3,8 +3,10 @@
 	var playerName;
 	var currPlayerCount;
 	var gameChoice = "";
-	var wins = 0;
-	var losses = 0;
+	var p1Wins = 0;
+	var p1Losses = 0;
+	var p2Wins = 0;
+	var p2Losses = 0;
 	var parent;
 	var player;
 	var p1Choice;
@@ -62,8 +64,8 @@
 
 							Name: playerName,
 							Choice: gameChoice,
-							Wins: wins,
-							Losses: losses
+							Wins: p1Wins,
+							Losses: p1Losses
 						}
 					});
 
@@ -76,8 +78,8 @@
 
 							Name: playerName,
 							Choice: gameChoice,
-							Wins: wins,
-							Losses: losses
+							Wins: p2Wins,
+							Losses: p2Losses
 						}
 					});
 				}	
@@ -339,7 +341,6 @@
 
 function getWinner(playerOne, playerTwo){
 
-	console.log("here");
 	console.log("playerOne " + playerOne);
 	console.log("playerTwo " + playerTwo);
 
@@ -347,9 +348,13 @@ function getWinner(playerOne, playerTwo){
 	   playerOne == 'scissors' && playerTwo == 'paper' ||
 	   playerOne == 'paper' && playerTwo == 'rock'){
 
-		//connection.update({1: {Wins: 1}}); //update playerOne wins
-		connection.child('1').set({Wins: 1});
-	    connection.update({2: {Losses: 1}}); //update playerTwo losses
+		
+		p1Wins++;
+		p2Losses++;
+
+		//connection.child('1').set({Wins: p1Wins});
+		connection.update({1: {Wins:  p1Wins}}); //update playerOne wins
+	    connection.update({2: {Losses: p2Losses}}); //update playerTwo losses
 
 	    console.log('here');
 
@@ -357,8 +362,11 @@ function getWinner(playerOne, playerTwo){
 	  		  playerTwo == 'scissors' && playerOne == 'paper' ||
 	 		  playerTwo == 'paper' && playerOne == 'rock'){
 
-		connection.update({2: {Wins: 1}}); //update playerTwo wins
-	    connection.update({1: {Losses: 1}}); //update playerOne losses
+		p2Wins++;
+		p1Losses++;
+
+		connection.update({2: {Wins: p2Wins}}); //update playerTwo wins
+	    connection.update({1: {Losses: p1Losses}}); //update playerOne losses
 
 	}
 
