@@ -180,7 +180,7 @@
 			$('#p1Pick').show().html(p1Choice);
 
 			//connection.update({1: {Choice: p1Choice}});
-			connection.child("1").set({Choice: p1Choice});
+			connection.child("1").update({Choice: p1Choice});
 
 			if(player == 1){
 
@@ -199,7 +199,7 @@
 			//$('#p2Pick').attr('data-pick', p2Choice);
 			$('#p2Pick').show().html(p2Choice);
 
-			connection.child("2").set({Choice: p2Choice});
+			connection.child("2").update({Choice: p2Choice});
 
 			if(player == 2){
 
@@ -252,8 +252,8 @@ function getWinner(playerOne, playerTwo){
 		$('#p2Pick').show().html($('#p2Pick').attr('data-pick'));
 		$('#winner').show().text("Player 1 Wins!");
 
-		//connection.child('1').set({Wins: p1Wins});
-		connection.update({1: {Wins:  p1Wins}, 2: {Losses: p2Losses}}); //update playerOne wins
+		connection.child('1').update({Wins: p1Wins});
+		connection.child('2').update({Losses: p2Losses});
 
 	} else if(playerTwo == 'rock' && playerOne == 'scissors' ||
 	  		  playerTwo == 'scissors' && playerOne == 'paper' ||
@@ -268,8 +268,9 @@ function getWinner(playerOne, playerTwo){
 		$('#p2Pick').show();
 		$('#winner').show().text("Player 2 Wins!");
 
-		
-		connection.update({1: {Losses: p1Losses}, 2: {Wins: p2Wins}}); //update playerOne losses
+	
+		connection.child('1').update({Losses: p1Losses});
+		connection.child('2').update({Wins: p2Wins});
 
 	}
 		console.log("p1Wins" + p1Wins);
